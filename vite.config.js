@@ -3,17 +3,18 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  // Remove base path or set to empty for Vercel
-  base: '',
+  // Remove base path completely for Vercel
+  base: '/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    // Add this for better chunking
+    // Ensure proper asset handling
+    assetsDir: 'assets',
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom']
-        }
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       }
     }
   },
